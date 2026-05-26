@@ -87,38 +87,39 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <header className="bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-200/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 py-4">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
+              <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex-shrink-0">
                 <Briefcase className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   Job Scraper Dashboard
                 </h1>
                 <p className="text-sm text-gray-500">Find your next opportunity</p>
               </div>
             </div>
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 self-end sm:self-auto">
               <button
                 onClick={() => window.location.reload()}
                 disabled={loading}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                className="inline-flex items-center px-3 sm:px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
               >
-                <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-                Refresh
+                <RefreshCw className={`w-4 h-4 sm:mr-2 ${loading ? 'animate-spin' : ''}`} />
+                <span className="hidden sm:inline">Refresh</span>
               </button>
               <button
                 onClick={handleScraping}
                 disabled={scraping}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:opacity-50 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 relative overflow-hidden"
+                className="inline-flex items-center px-3 sm:px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:opacity-50 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 relative overflow-hidden"
               >
                 {scraping && (
                   <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 animate-pulse" />
                 )}
                 <div className="relative flex items-center">
-                  <Search className={`w-4 h-4 mr-2 ${scraping ? 'animate-spin' : ''}`} />
-                  {scraping ? 'Scraping Jobs...' : 'Start Scraping'}
+                  <Search className={`w-4 h-4 sm:mr-2 ${scraping ? 'animate-spin' : ''}`} />
+                  <span className="hidden sm:inline">{scraping ? 'Scraping Jobs...' : 'Start Scraping'}</span>
+                  <span className="sm:hidden">{scraping ? 'Scraping...' : 'Scrape'}</span>
                 </div>
               </button>
             </div>
@@ -127,7 +128,7 @@ function App() {
       </header>
 
       {showSuccess && scrapeResult && (
-        <div className={`fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-500 transform ${
+        <div className={`fixed top-20 left-4 right-4 sm:left-auto sm:right-4 sm:w-80 z-50 p-4 rounded-lg shadow-lg transition-all duration-500 transform ${
           scrapeResult.success 
             ? 'bg-green-50 border border-green-200 text-green-800' 
             : 'bg-red-50 border border-red-200 text-red-800'
@@ -202,8 +203,8 @@ function App() {
               <span>days</span>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 flex-1">
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 flex-1">
               <div className="relative group">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
                 <input
@@ -269,7 +270,7 @@ function App() {
             </div>
             <button
               onClick={resetFilters}
-              className="inline-flex items-center px-4 py-3 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md"
+              className="inline-flex items-center justify-center w-full sm:w-auto px-4 py-3 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md"
             >
               <X className="w-4 h-4 mr-2" />
               Clear Filters
@@ -277,71 +278,71 @@ function App() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Briefcase className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Jobs</p>
-                <p className="text-3xl font-bold text-gray-900">{jobs.length}</p>
+              <div className="ml-3 sm:ml-4 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Total Jobs</p>
+                <p className="text-2xl sm:text-3xl font-bold text-gray-900">{jobs.length}</p>
                 <p className="text-xs text-green-600 flex items-center mt-1">
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  Available positions
+                  <TrendingUp className="w-3 h-3 mr-1 flex-shrink-0" />
+                  <span className="truncate">Available positions</span>
                 </p>
               </div>
             </div>
           </div>
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Search className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Search className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Filtered Results</p>
-                <p className="text-3xl font-bold text-gray-900">{filteredJobs.length}</p>
+              <div className="ml-3 sm:ml-4 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Filtered Results</p>
+                <p className="text-2xl sm:text-3xl font-bold text-gray-900">{filteredJobs.length}</p>
                 <p className="text-xs text-blue-600 flex items-center mt-1">
-                  <Filter className="w-3 h-3 mr-1" />
-                  Matching criteria
+                  <Filter className="w-3 h-3 mr-1 flex-shrink-0" />
+                  <span className="truncate">Matching criteria</span>
                 </p>
               </div>
             </div>
           </div>
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <MapPin className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Locations</p>
-                <p className="text-3xl font-bold text-gray-900">{getUniqueLocations(jobs).length}</p>
+              <div className="ml-3 sm:ml-4 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Locations</p>
+                <p className="text-2xl sm:text-3xl font-bold text-gray-900">{getUniqueLocations(jobs).length}</p>
                 <p className="text-xs text-purple-600 flex items-center mt-1">
-                  <Users className="w-3 h-3 mr-1" />
-                  Cities available
+                  <Users className="w-3 h-3 mr-1 flex-shrink-0" />
+                  <span className="truncate">Cities available</span>
                 </p>
               </div>
             </div>
           </div>
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Clock className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Avg Experience</p>
-                <p className="text-3xl font-bold text-gray-900">{getAverageExperience(jobs)}</p>
+              <div className="ml-3 sm:ml-4 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Avg Experience</p>
+                <p className="text-2xl sm:text-3xl font-bold text-gray-900">{getAverageExperience(jobs)}</p>
                 <p className="text-xs text-orange-600 flex items-center mt-1">
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  Years required
+                  <TrendingUp className="w-3 h-3 mr-1 flex-shrink-0" />
+                  <span className="truncate">Years required</span>
                 </p>
               </div>
             </div>
@@ -378,21 +379,21 @@ function App() {
               ))}
               
               {totalPages > 1 && (
-                <div className="flex justify-center items-center space-x-2 mt-8">
+                <div className="flex justify-center items-center gap-2 mt-8">
                   <button
                     onClick={prevPage}
                     disabled={currentPage === 1}
                     className="flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    <ChevronLeft className="w-4 h-4 mr-1" />
-                    Previous
+                    <ChevronLeft className="w-4 h-4" />
+                    <span className="hidden sm:inline ml-1">Previous</span>
                   </button>
-                  
-                  <div className="flex space-x-1">
+
+                  <div className="hidden sm:flex space-x-1">
                     {[...Array(totalPages)].map((_, index) => {
                       const pageNumber = index + 1;
                       const isCurrentPage = pageNumber === currentPage;
-                      
+
                       if (
                         pageNumber === 1 ||
                         pageNumber === totalPages ||
@@ -412,7 +413,7 @@ function App() {
                           </button>
                         );
                       }
-                      
+
                       if (
                         (pageNumber === currentPage - 2 && currentPage > 3) ||
                         (pageNumber === currentPage + 2 && currentPage < totalPages - 2)
@@ -423,18 +424,22 @@ function App() {
                           </span>
                         );
                       }
-                      
+
                       return null;
                     })}
                   </div>
-                  
+
+                  <span className="sm:hidden px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg">
+                    {currentPage} / {totalPages}
+                  </span>
+
                   <button
                     onClick={nextPage}
                     disabled={currentPage === totalPages}
                     className="flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    Next
-                    <ChevronRight className="w-4 h-4 ml-1" />
+                    <span className="hidden sm:inline mr-1">Next</span>
+                    <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
               )}
