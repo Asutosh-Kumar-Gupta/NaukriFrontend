@@ -50,11 +50,13 @@ function App() {
   const handleScraping = async () => {
     setScraping(true);
     setScrapeResult(null);
+    console.log(scrapeKeywords,"scrapeKeywords scrape",latestOnly)
     try {
       const result = await scrapeJobs(scrapeKeywords, {
         latestOnly,
         days: Number(latestDays) || 7
       });
+      console.log(result,"result scrape")
       setScrapeResult(result);
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 5000);
@@ -67,6 +69,7 @@ function App() {
     }
     setScraping(false);
   };
+  console.log(scrapeResult,"scrape data")
 
   const resetFilters = () => {
     setSearchTerm('');
