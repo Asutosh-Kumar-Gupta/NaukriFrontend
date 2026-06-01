@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { jobsApi } from '../services/api';
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 export const useJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,7 +16,7 @@ export const useJobs = () => {
       setJobs(response.data);
     } catch (err) {
       setError(err.message);
-      setJobs([]);
+      // Don't wipe existing jobs on a transient network error
     } finally {
       setLoading(false);
     }
@@ -30,7 +32,24 @@ export const useJobs = () => {
         latest_only: options.latestOnly ?? true,
         days: options.days ?? 7
       });
-      await fetchJobs();
+
+      // Retry fetching jobs up to 3 times — the backend may be briefly
+      // busy right after a long scrape commit, or a transient network
+      // error may have occurred.
+      let lastErr;
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          const jobsResponse = await jobsApi.getJobs({});
+          setJobs(jobsResponse.data);
+          lastErr = null;
+          break;
+        } catch (err) {
+          lastErr = err;
+          if (attempt < 3) await delay(attempt * 2000);
+        }
+      }
+      if (lastErr) setError(lastErr.message);
+
       return response.data;
     } catch (err) {
       setError(err.message);
