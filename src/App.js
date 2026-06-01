@@ -63,7 +63,7 @@ function App() {
     try {
       await dispatch(scrapeJobs({ keywords: scrapeKeywords, options: { latestOnly, days: Number(latestDays) || 7 } })).unwrap();
       keywordsInitialized.current = true;
-      dispatch(fetchStats({ retries: 3, bust: true }));
+      dispatch(fetchStats({ retries: 3 }));
     } catch (_) {
       // scrapeJobs.rejected already sets scrapeResult in the slice
     }

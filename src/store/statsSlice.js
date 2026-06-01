@@ -5,11 +5,11 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export const fetchStats = createAsyncThunk(
   'stats/fetchStats',
-  async ({ retries = 1, bust = false } = {}, { rejectWithValue }) => {
+  async ({ retries = 1 } = {}, { rejectWithValue }) => {
     let lastErr;
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
-        const response = await jobsApi.getStats(bust || attempt > 1);
+        const response = await jobsApi.getStats();
         return response.data;
       } catch (err) {
         lastErr = err;

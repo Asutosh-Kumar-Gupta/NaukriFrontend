@@ -5,11 +5,15 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export const fetchJobs = createAsyncThunk(
   'jobs/fetchJobs',
-  async (filters = {}, { rejectWithValue }) => {
+  async (filters = {}, { rejectWithValue, signal }) => {
     try {
-      const response = await jobsApi.getJobs({ ...filters, _t: Date.now() });
+      const response = await jobsApi.getJobs(filters, signal);
       return response.data;
     } catch (err) {
+      if (err.name === 'CanceledError' || err.name === 'AbortError') {
+        // Silently cancel — the next request is already in flight
+        return rejectWithValue('cancelled');
+      }
       return rejectWithValue(err.message);
     }
   }
@@ -72,8 +76,10 @@ const jobsSlice = createSlice({
         state.items = action.payload;
       })
       .addCase(fetchJobs.rejected, (state, action) => {
+        if (action.payload === 'cancelled') return; // keep status/items from the new request
         state.status = 'failed';
         state.error = action.payload;
+        state.items = []; // don't show stale data on a real error
       })
       .addCase(scrapeJobs.pending, (state) => {
         state.scrapeStatus = 'loading';
@@ -83,7 +89,7 @@ const jobsSlice = createSlice({
         state.scrapeStatus = 'succeeded';
         state.scrapeResult = action.payload;
       })
-      .addCase(scrapeJobs.rejected, (state, action) => {
+      .addCase(scrapeJobs.rejected, (state) => {
         state.scrapeStatus = 'failed';
         state.scrapeResult = { success: false, message: 'Scraping failed. Please try again.' };
       });
