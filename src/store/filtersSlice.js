@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DEFAULT_KEYWORDS, JOBS_PER_PAGE } from '../constants';
+import { DEFAULT_KEYWORDS } from '../constants';
 
 const filtersSlice = createSlice({
   name: 'filters',

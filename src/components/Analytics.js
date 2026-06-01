@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { TrendingUp, MapPin, Clock, Building, ChevronUp, ChevronDown } from 'lucide-react';
-import { getLocationDistribution, getExperienceDistribution, getTopCompanies, getUniqueLocations } from '../utils/analytics';
+import { getLocationDistribution, getExperienceDistribution, getTopCompanies } from '../utils/analytics';
 import { selectUniqueLocations } from '../store/selectors';
 
 const Analytics = ({ showAnalytics, setShowAnalytics }) => {
