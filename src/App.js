@@ -10,7 +10,7 @@ import Analytics from './components/Analytics';
 import { JOBS_PER_PAGE, DEFAULT_KEYWORDS } from './constants';
 
 function App() {
-  const { jobs, loading, scrapeJobs } = useJobs();
+  const { jobs, loading, scrapeJobs, fetchJobs } = useJobs();
   const { stats, fetchStats } = useStats();
   
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -101,7 +101,7 @@ function App() {
             </div>
             <div className="flex space-x-3 self-end sm:self-auto">
               <button
-                onClick={() => window.location.reload()}
+                onClick={fetchJobs}
                 disabled={loading}
                 className="inline-flex items-center px-3 sm:px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
               >
