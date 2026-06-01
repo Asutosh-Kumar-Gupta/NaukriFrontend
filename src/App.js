@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search, Filter, MapPin, Briefcase, RefreshCw, Users, TrendingUp, Clock, X, ChevronLeft, ChevronRight, ArrowUpDown } from 'lucide-react';
 
 import { useJobs } from './hooks/useJobs';
@@ -20,6 +20,7 @@ function App() {
   const [maxExperience, setMaxExperience] = useState('');
   const [sortBy, setSortBy] = useState('posted-newest');
   const [scrapeKeywords, setScrapeKeywords] = useState(DEFAULT_KEYWORDS);
+  const keywordsInitialized = useRef(false);
   const [latestOnly, setLatestOnly] = useState(true);
   const [latestDays, setLatestDays] = useState(7);
   const [scraping, setScraping] = useState(false);
@@ -29,8 +30,9 @@ function App() {
   const [showAnalytics, setShowAnalytics] = useState(true);
 
   useEffect(() => {
-    if (stats?.last_scraped_keywords) {
+    if (!keywordsInitialized.current && stats?.last_scraped_keywords) {
       setScrapeKeywords(stats.last_scraped_keywords);
+      keywordsInitialized.current = true;
     }
   }, [stats]);
 
@@ -56,6 +58,7 @@ function App() {
       setScrapeResult(result);
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 5000);
+      keywordsInitialized.current = true;
       fetchStats();
     } catch (error) {
       setScrapeResult({ success: false, message: 'Scraping failed. Please try again.' });
