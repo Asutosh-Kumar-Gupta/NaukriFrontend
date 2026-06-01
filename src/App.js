@@ -59,7 +59,7 @@ function App() {
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 5000);
       keywordsInitialized.current = true;
-      fetchStats({ retries: 3 });
+      fetchStats({ retries: 3, bust: true });
     } catch (error) {
       setScrapeResult({ success: false, message: 'Scraping failed. Please try again.' });
       setShowSuccess(true);

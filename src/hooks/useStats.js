@@ -8,13 +8,13 @@ export const useStats = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchStats = async ({ retries = 1 } = {}) => {
+  const fetchStats = async ({ retries = 1, bust = false } = {}) => {
     setLoading(true);
     setError(null);
     let lastErr;
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
-        const response = await jobsApi.getStats();
+        const response = await jobsApi.getStats(bust || attempt > 1);
         setStats(response.data);
         lastErr = null;
         break;

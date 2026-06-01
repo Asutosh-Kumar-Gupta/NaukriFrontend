@@ -12,7 +12,7 @@ export const useJobs = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await jobsApi.getJobs(filters);
+      const response = await jobsApi.getJobs({ ...filters, _t: Date.now() });
       setJobs(response.data);
     } catch (err) {
       setError(err.message);
@@ -39,7 +39,7 @@ export const useJobs = () => {
       let lastErr;
       for (let attempt = 1; attempt <= 3; attempt++) {
         try {
-          const jobsResponse = await jobsApi.getJobs({});
+          const jobsResponse = await jobsApi.getJobs({ _t: Date.now() });
           setJobs(jobsResponse.data);
           lastErr = null;
           break;
